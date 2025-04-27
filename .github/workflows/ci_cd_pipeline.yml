@@ -35,12 +35,11 @@ jobs:
 
       - name: Add EC2 instance to known hosts
         run: |
+          mkdir -p ~/.ssh
           ssh-keyscan -H $MYSQL_HOST >> ~/.ssh/known_hosts
 
       - name: Run MySQL query on EC2 instance
         run: |
-          ssh -i /tmpThe failure in the pipeline occurs because of the `Host key/private-key.pem ubuntu@$MYSQL_HOST << EOF
-          echo verification failed` error during the SSH connection step. This indicates that the SSH host key "Running MySQL query..."
+          ssh -i /path/to/private-key.pem ubuntu@$MYSQL_HOST <<EOF
           ./sql_query.sh
-          for the MySQL EC2 instance is not recognized or correctly EOF
-
+          EOF
