@@ -33,15 +33,14 @@ jobs:
           echo "MYSQL_HOST=$(echo $SECRET | jq -r '.host')" >> $GITHUB_ENV
           echo "MYSQL_PORT=3307" >> $GITHUB_ENV  # Assuming port is 3307
 
-      - name: Decode private key from GitHub Secrets
+      - name: Add EC2 instance to known hosts
         run: |
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" | base64 --decode > /tmp/private-key.pem
-          chmod 600 /tmp/private-key.pem
-          
+          ssh-keyscan -H $MYSQL_HOST >> ~/.ssh/known_hosts
+
       - name: Run MySQL query on EC2 instance
         run: |
-          ssh -i /tmp/private-key.pem ubuntu@$MYSQL_HOST << EOF
-            echo "Running MySQL query..."
-            ./sql_query.sh
-          EOF
+          ssh -i /tmpThe failure in the pipeline occurs because of the `Host key/private-key.pem ubuntu@$MYSQL_HOST << EOF
+          echo verification failed` error during the SSH connection step. This indicates that the SSH host key "Running MySQL query..."
+          ./sql_query.sh
+          for the MySQL EC2 instance is not recognized or correctly EOF
 
