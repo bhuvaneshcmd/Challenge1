@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing MySQL client
+      - apt-get update -y
+      - apt-get install -y mysql-client
+      - echo Fetching MySQL credentials from AWS Secrets Manager
+      - MYSQL_SECRET=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:488560023623:secret:MySQL-credentials_v6-orCWPr --query SecretString --output text)
+      - export MYSQL_USERNAME=$(echo $MYSQL_SECRET | jq -r .username)
+      - export MYSQL_PASSWORD=$(echo $MYSQL_SECRET | jq -r .password)
+      - export MYSQL_HOST=$(echo $MYSQL_SECRET | jq -r .host)
+      - export MYSQL_PORT=$(echo $MYSQL_SECRET | jq -r .port)
+
+  build:
+    commands:
+      - echo Running MySQL query script
+      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p$MYSQL_PASSWORD < /path/to/sql_query.sh
+
+artifacts:
+  files:
+    - '/*'
