@@ -7,8 +7,26 @@ USER='admin'
 PASSWORD='Admin@123'
 DATABASE='employees'
 
+# Debug: print credentials
+echo "MySQL Credentials:"
+echo "HOST: $HOST"
+echo "PORT: $PORT"
+echo "USER: $USER"
+echo "PASSWORD: $PASSWORD"  # Don't print passwords in production, this is just for debugging
+
 # MySQL query
 QUERY="SELECT * FROM employees LIMIT 10;"
 
+# Debug: print the query
+echo "Running query: $QUERY"
+
 # Connect to MySQL and execute the query
-mysql -h $HOST -P $PORT -u $USER -p$PASSWORD -e "$QUERY" $DATABASE
+mysql -h $HOST -P $PORT -u $USER -p"$PASSWORD" -e "$QUERY" $DATABASE
+
+# Check if the command was successful
+if [ $? -ne 0 ]; then
+  echo "MySQL query failed"
+  exit 1
+else
+  echo "MySQL query executed successfully"
+fi
