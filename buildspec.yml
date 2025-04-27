@@ -21,4 +21,6 @@ phases:
 
 artifacts:
   files:
-    - '/*'
+    - 'Challenge1//*'
+  discard-paths: no
+  base-directory: /root  # Ensures the files are packaged correctly
