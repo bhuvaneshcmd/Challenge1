@@ -15,8 +15,10 @@ phases:
 
   build:
     commands:
-      - echo Running MySQL query script
-      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p$MYSQL_PASSWORD < /path/to/sql_query.sh
+      - echo "Listing files in current directory"
+      - ls -l
+      - echo "Running MySQL query script"
+      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" < ./sql_query.sh
 
 artifacts:
   files:
