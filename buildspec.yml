@@ -5,24 +5,17 @@ phases:
     commands:
       - echo Installing MySQL client
       - apt-get update -y
-      - apt-get install -y mysql-client
+      - apt-get install -y mysql-client jq
       - echo Fetching MySQL credentials from AWS Secrets Manager
       - MYSQL_SECRET=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:488560023623:secret:MySQL-credentials_v6-orCWPr --query SecretString --output text)
-      - echo "MYSQL_SECRET: $MYSQL_SECRET"  # Debugging line
-      - export MYSQL_USERNAME=$(echo $MYSQL_SECRET | jq -r .username)
-      - export MYSQL_PASSWORD=$(echo $MYSQL_SECRET | jq -r .password)
-      - export MYSQL_HOST=$(echo $MYSQL_SECRET | jq -r .host)
-      - export MYSQL_PORT=$(echo $MYSQL_SECRET | jq -r .port)
-      - echo "MYSQL_USERNAME: $MYSQL_USERNAME"
-      - echo "MYSQL_PASSWORD: $MYSQL_PASSWORD"
-      - echo "MYSQL_HOST: $MYSQL_HOST"
-      - echo "MYSQL_PORT: $MYSQL_PORT"
-
+      - export MYSQL_USERNAME=$(echo $MYSQL_SECRET | jq -r '.username')
+      - export MYSQL_PASSWORD=$(echo $MYSQL_SECRET | jq -r '.password')
+      - export MYSQL_HOST=$(echo $MYSQL_SECRET | jq -r '.host')
+      - export MYSQL_PORT=$(echo $MYSQL_SECRET | jq -r '.port')
   build:
     commands:
       - echo Running MySQL query script
-      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" -e "SELECT * FROM employees LIMIT 10;" $DATABASE
-
+      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" -e "SELECT * FROM employees LIMIT 10;"
 artifacts:
   files:
     - '/*'
