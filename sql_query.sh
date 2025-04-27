@@ -21,12 +21,14 @@ QUERY="SELECT * FROM employees LIMIT 10;"
 echo "Running query: $QUERY"
 
 # Connect to MySQL and execute the query
-mysql -h $HOST -P $PORT -u $USER -p"$PASSWORD" -e "$QUERY" $DATABASE
+QUERY_RESULT=$(mysql -h $HOST -P $PORT -u $USER -p"$PASSWORD" -e "$QUERY" $DATABASE)
 
 # Check if the command was successful
-if [ $? -ne 0 ]; then
-  echo "MySQL query failed"
-  exit 1
+if [ $? -eq 0 ]; then
+    echo "MySQL query executed successfully!"
+    echo "Query Result:"
+    echo "$QUERY_RESULT"
 else
-  echo "MySQL query executed successfully"
+    echo "MySQL query failed."
+    exit 1
 fi
