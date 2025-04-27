@@ -1,0 +1,21 @@
+version: 0.0
+os: linux
+files:
+  - source: /root/Challenge1/
+    destination: /home/ubuntu/Challenge1/
+
+hooks:
+  BeforeInstall:
+    - location: /root/Challenge1/install_mysql.sh
+      timeout: 300
+      runas: root
+
+  AfterInstall:
+    - location: /root/Challenge1/sql_query.sh
+      timeout: 180
+      runas: root
+
+  ApplicationStart:
+    - location: /root/Challenge1/start.sh
+      timeout: 180
+      runas: root
