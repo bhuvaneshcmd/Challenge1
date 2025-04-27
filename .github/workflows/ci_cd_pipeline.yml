@@ -41,6 +41,7 @@ jobs:
       - name: Run MySQL query on EC2 instance
         run: |
           ssh -i /tmp/private-key.pem ubuntu@$MYSQL_HOST << EOF
-            ./Challenge1/sql_query.sh
+            echo "Running MySQL query..."
+            ./sql_query.sh
           EOF
 
