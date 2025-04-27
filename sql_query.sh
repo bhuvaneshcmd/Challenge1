@@ -21,7 +21,7 @@ QUERY="SELECT * FROM employees LIMIT 10;"
 echo "Running query: $QUERY"
 
 # Connect to MySQL and execute the query
-QUERY_RESULT=$(mysql -h $HOST -P $PORT -u $USER -p"$PASSWORD" -e "$QUERY" $DATABASE)
+QUERY_RESULT=$(mysql -h $HOST -P $PORT -u $USER -p"$PASSWORD" -e "$QUERY" --no-titty $DATABASE)
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
