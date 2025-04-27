@@ -39,4 +39,4 @@ jobs:
       
       - name: Run SQL script on MySQL
         run: |
-          mysql -h "$MYSQL_HOST" --port="$MYSQL_PORT" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" < ./employees.sql
+          mysql -h "$MYSQL_HOST" --port="$MYSQL_PORT" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" < ./test_db/employees.sql
