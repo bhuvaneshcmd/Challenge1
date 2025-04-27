@@ -35,7 +35,5 @@ jobs:
 
       - name: Run MySQL query on EC2 instance
         run: |
-          # Use SSH to access EC2 instance and run MySQL query
-          ssh -i /path/to/your/private-key.pem ec2-user@$MYSQL_HOST << EOF
-            mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" -P "$MYSQL_PORT" -e "SELECT * FROM employees LIMIT 10;"
-          EOF
+          echo "Running MySQL query..."
+          ./sql_query.sh
