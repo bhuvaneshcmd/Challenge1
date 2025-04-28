@@ -1,5 +1,3 @@
-version: 0.2
-
 phases:
   install:
     commands:
@@ -17,12 +15,8 @@ phases:
   build:
     commands:
       - echo "Running MySQL query and saving output"
-      - pwd
-      - ls -l
       - mkdir -p Challenge1
-      - ls -l
-      - |
-        mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > Challenge1/query_result.txt
+      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > Challenge1/query_result.txt
       - echo "Query executed and saved to Challenge1/query_result.txt"
       - ls -l Challenge1/
       - ls -R .
