@@ -1,18 +1,24 @@
 #!/bin/bash
 
-# MySQL credentials
-HOST='54.91.246.162'
-PORT='3307'
-USER='admin'
-PASSWORD='Admin@123'
-DATABASE='employees'
+# AWS Secrets Manager secret ID (replace with your actual secret ID)
+SECRET_ID="your-secret-id"
 
-# Debug: print credentials
+# Retrieve the secret from AWS Secrets Manager
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --query SecretString --output text)
+
+# Extract MySQL credentials from the secret
+HOST=$(echo $SECRET_JSON | jq -r .db_host)
+USER=$(echo $SECRET_JSON | jq -r .db_user)
+PASSWORD=$(echo $SECRET_JSON | jq -r .db_pass)
+DATABASE=$(echo $SECRET_JSON | jq -r .db_name)
+
+# Debug: print credentials (avoid printing password in production)
 echo "MySQL Credentials:"
 echo "HOST: $HOST"
-echo "PORT: $PORT"
+echo "PORT: 3307"
 echo "USER: $USER"
-echo "PASSWORD: $PASSWORD"  # Don't print passwords in production, this is just for debugging
+# echo "PASSWORD: $PASSWORD"  # Don't print passwords in production
+echo "DATABASE: $DATABASE"
 
 # MySQL query
 QUERY="SELECT * FROM employees LIMIT 10;"
@@ -21,8 +27,7 @@ QUERY="SELECT * FROM employees LIMIT 10;"
 echo "Running query: $QUERY"
 
 # Connect to MySQL and execute the query
-
-mysql -h $HOST -P $PORT -u $USER -p"$PASSWORD" -e "$QUERY" $DATABASE
+mysql -h $HOST -P 3307 -u $USER -p"$PASSWORD" -e "$QUERY" $DATABASE
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
