@@ -17,11 +17,11 @@ PORT=$(echo $SECRET_JSON | jq -r .port)      # Use 'port' from the secret
 DATABASE="employees"  # Assuming you want to query the 'employees' database
 
 # Debug: print extracted credentials
-echo "MySQL Credentials:"
-echo "HOST: $HOST"
-echo "USER: $USER"
-echo "DATABASE: $DATABASE"
-echo "PORT: $PORT"
+#echo "MySQL Credentials:"
+#echo "HOST: $HOST"
+#echo "USER: $USER"
+#echo "DATABASE: $DATABASE"
+#echo "PORT: $PORT"
 
 # MySQL query
 QUERY="SELECT * FROM employees LIMIT 5;"
