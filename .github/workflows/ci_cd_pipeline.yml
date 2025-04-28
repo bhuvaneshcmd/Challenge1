@@ -35,4 +35,4 @@ jobs:
 
       - name: Run MySQL query directly
         run: |
-          mysql -h ${{ env.MYSQL_HOST }} -P ${{ env.MYSQL_PORT }} -u ${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }} -e "SELECT * FROM employees;"
+          mysql -h ${{ env.MYSQL_HOST }} -P ${{ env.MYSQL_PORT }} -u ${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }} -e "SELECT * FROM employees LIMIT 10;"
