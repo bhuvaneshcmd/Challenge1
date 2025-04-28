@@ -12,28 +12,28 @@ phases:
       - export MYSQL_PASSWORD=$(echo $MYSQL_SECRET | jq -r .password)
       - export MYSQL_HOST=$(echo $MYSQL_SECRET | jq -r .host)
       - export MYSQL_PORT=$(echo $MYSQL_SECRET | jq -r .port)
-      - export MYSQL_DATABASE=employees  # Manually setting database name
+      - export MYSQL_DATABASE=employees
 
   build:
     commands:
       - echo "Running MySQL query and saving output"
-      - mkdir -p /root/Challenge1
+      - mkdir -p Challenge1
       - |
         echo "Connecting to MySQL and running query..."
-        mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > /root/Challenge1/query_result.txt 2> /root/Challenge1/query_error.log
+        mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > Challenge1/query_result.txt 2> Challenge1/query_error.log
         if [ $? -ne 0 ]; then
           echo "MySQL query failed! Check query_error.log for details."
-          cat /root/Challenge1/query_error.log
+          cat Challenge1/query_error.log
           exit 1
         else
           echo "MySQL query succeeded. Output saved."
         fi
-      - echo "Listing contents of /root/Challenge1"
-      - ls -l /root/Challenge1/
+      - echo "Listing contents of Challenge1"
+      - ls -l Challenge1/
 
 artifacts:
   files:
     - '**/*'
   discard-paths: no
-  base-directory: /root/Challenge1
+  base-directory: Challenge1
 
