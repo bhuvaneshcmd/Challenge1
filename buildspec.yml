@@ -12,16 +12,16 @@ phases:
       - export MYSQL_PASSWORD=$(echo $MYSQL_SECRET | jq -r .password)
       - export MYSQL_HOST=$(echo $MYSQL_SECRET | jq -r .host)
       - export MYSQL_PORT=$(echo $MYSQL_SECRET | jq -r .port)
-      - export MYSQL_DATABASE=employees  # Manually setting database name
+      - export MYSQL_DATABASE=employees
 
   build:
     commands:
       - echo "Running MySQL query"
-      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;"
+      - mkdir -p Challenge1
+      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > Challenge1/query_result.txt
 
 artifacts:
   files:
-    - 'Challenge1//*'
+    - 'Challenge1/**/*'
   discard-paths: no
-  base-directory: /root  # Ensures the files are packaged correctly
 
