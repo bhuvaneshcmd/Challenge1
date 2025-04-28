@@ -10,16 +10,18 @@ SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --query
 echo "Fetched Secret JSON: $SECRET_JSON"
 
 # Extract MySQL credentials from the secret
-HOST=$(echo $SECRET_JSON | jq -r .db_host)
-USER=$(echo $SECRET_JSON | jq -r .db_user)
-PASSWORD=$(echo $SECRET_JSON | jq -r .db_pass)
-DATABASE=$(echo $SECRET_JSON | jq -r .db_name)
+HOST=$(echo $SECRET_JSON | jq -r .host)
+USER=$(echo $SECRET_JSON | jq -r .username)  # Use 'username' from the secret
+PASSWORD=$(echo $SECRET_JSON | jq -r .password)
+PORT=$(echo $SECRET_JSON | jq -r .port)      # Use 'port' from the secret
+DATABASE="employees"  # Assuming you want to query the 'employees' database
 
 # Debug: print extracted credentials
 echo "MySQL Credentials:"
 echo "HOST: $HOST"
 echo "USER: $USER"
 echo "DATABASE: $DATABASE"
+echo "PORT: $PORT"
 
 # MySQL query
 QUERY="SELECT * FROM employees LIMIT 10;"
@@ -28,7 +30,7 @@ QUERY="SELECT * FROM employees LIMIT 10;"
 echo "Running query: $QUERY"
 
 # Connect to MySQL and execute the query
-mysql -h "$HOST" -P 3307 -u "$USER" -p"$PASSWORD" -e "$QUERY" "$DATABASE"
+mysql -h "$HOST" -P "$PORT" -u "$USER" -p"$PASSWORD" -e "$QUERY" "$DATABASE"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
