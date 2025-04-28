@@ -31,5 +31,5 @@ jobs:
 
       - name: Run Script
         run: |
-          chmod +x query_employee.sh
+          chmod +x sql_query.sh
           ./sql_query.sh
