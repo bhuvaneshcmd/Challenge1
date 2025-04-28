@@ -51,7 +51,7 @@ jobs:
           echo "QUERY_RESULTS=$(cat query_results.txt)" >> $GITHUB_ENV
 
       - name: Upload query results as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.0 # Updated to a specific stable version
         with:
           name: mysql-query-results
           path: query_results.txt
