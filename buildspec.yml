@@ -1,3 +1,5 @@
+version: 0.2
+
 phases:
   install:
     commands:
@@ -5,25 +7,21 @@ phases:
       - apt-get update -y
       - apt-get install -y mysql-client jq
       - echo "Fetching MySQL credentials from AWS Secrets Manager"
-      - MYSQL_SECRET=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:488560023623:secret:MySQL-credentials_v6-orCWPr --query SecretString --output text)
+      - MYSQL_SECRET=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:488560023623:secret:MySQL-credentials_v7-EwKmGu --query SecretString --output text)
       - export MYSQL_USERNAME=$(echo $MYSQL_SECRET | jq -r .username)
       - export MYSQL_PASSWORD=$(echo $MYSQL_SECRET | jq -r .password)
       - export MYSQL_HOST=$(echo $MYSQL_SECRET | jq -r .host)
       - export MYSQL_PORT=$(echo $MYSQL_SECRET | jq -r .port)
-      - export MYSQL_DATABASE=employees
+      - export MYSQL_DATABASE=employees  # Manually setting database name
 
   build:
     commands:
-      - echo "Running MySQL query and saving output"
-      - mkdir -p Challenge1
-      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > Challenge1/query_result.txt
-      - echo "Query executed and saved to Challenge1/query_result.txt"
-      - ls -l Challenge1/
-      - ls -R .
+      - echo "Running MySQL query"
+      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;"
 
 artifacts:
   files:
-    - '**/*'
+    - 'Challenge1//*'
   discard-paths: no
-  base-directory: Challenge1
+  base-directory: /root  # Ensures the files are packaged correctly
 
