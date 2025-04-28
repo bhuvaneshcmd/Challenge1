@@ -3,10 +3,10 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing MySQL client and jq"
+      - echo "Installing dependencies"
       - apt-get update -y
       - apt-get install -y mysql-client jq
-      - echo "Fetching MySQL credentials from AWS Secrets Manager"
+      - echo "Fetching MySQL credentials from Secrets Manager"
       - MYSQL_SECRET=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:488560023623:secret:MySQL-credentials_v7-EwKmGu --query SecretString --output text)
       - export MYSQL_USERNAME=$(echo $MYSQL_SECRET | jq -r .username)
       - export MYSQL_PASSWORD=$(echo $MYSQL_SECRET | jq -r .password)
@@ -19,9 +19,11 @@ phases:
       - echo "Running MySQL query"
       - mkdir -p Challenge1
       - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > Challenge1/query_result.txt
+      - echo "Checking current location and files:"
+      - pwd
+      - ls -R
 
 artifacts:
   files:
     - 'Challenge1/**/*'
-  discard-paths: no
 
