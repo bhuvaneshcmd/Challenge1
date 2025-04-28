@@ -24,7 +24,7 @@ echo "DATABASE: $DATABASE"
 echo "PORT: $PORT"
 
 # MySQL query
-QUERY="SELECT * FROM employees LIMIT 10;"
+QUERY="SELECT * FROM employees LIMIT 5;"
 
 # Debug: print the query
 echo "Running query: $QUERY"
