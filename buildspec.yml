@@ -18,7 +18,16 @@ phases:
     commands:
       - echo "Running MySQL query and saving output"
       - mkdir -p /root/Challenge1
-      - mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > /root/Challenge1/query_result.txt
+      - |
+        echo "Connecting to MySQL and running query..."
+        mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USERNAME -p"$MYSQL_PASSWORD" $MYSQL_DATABASE -e "SELECT * FROM employees LIMIT 10;" > /root/Challenge1/query_result.txt 2> /root/Challenge1/query_error.log
+        if [ $? -ne 0 ]; then
+          echo "MySQL query failed! Check query_error.log for details."
+          cat /root/Challenge1/query_error.log
+          exit 1
+        else
+          echo "MySQL query succeeded. Output saved."
+        fi
       - echo "Listing contents of /root/Challenge1"
       - ls -l /root/Challenge1/
 
