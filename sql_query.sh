@@ -19,8 +19,8 @@ DATABASE="employees"  # Assuming you want to query the 'employees' database
 # Debug: print extracted credentials
 #echo "MySQL Credentials:"
 #echo "HOST: $HOST"
-#echo "USER: $USER"
-#echo "DATABASE: $DATABASE"
+echo "USER: $USER"
+echo "DATABASE: $DATABASE"
 echo "PORT: $PORT"
 
 # MySQL query
