@@ -24,10 +24,11 @@ jobs:
         id: secrets
         run: |
           SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id MySQL-credentials_v7 --query SecretString --output text)
-          echo "DB_HOST=$(echo $SECRET_JSON | jq -r .db_host)" >> $GITHUB_ENV
-          echo "DB_USER=$(echo $SECRET_JSON | jq -r .db_user)" >> $GITHUB_ENV
-          echo "DB_PASS=$(echo $SECRET_JSON | jq -r .db_pass)" >> $GITHUB_ENV
-          echo "DB_NAME=$(echo $SECRET_JSON | jq -r .db_name)" >> $GITHUB_ENV
+          echo "DB_HOST=$(echo $SECRET_JSON | jq -r .host)" >> $GITHUB_ENV
+          echo "DB_USER=$(echo $SECRET_JSON | jq -r .username)" >> $GITHUB_ENV
+          echo "DB_PASS=$(echo $SECRET_JSON | jq -r .password)" >> $GITHUB_ENV
+          echo "DB_PORT=$(echo $SECRET_JSON | jq -r .port)" >> $GITHUB_ENV
+
 
       - name: Run Script
         run: |
