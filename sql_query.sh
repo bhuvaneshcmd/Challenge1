@@ -20,7 +20,7 @@ DATABASE="employees"  # Assuming you want to query the 'employees' database
 #echo "MySQL Credentials:"
 #echo "HOST: $HOST"
 #echo "USER: $USER"
-echo "DATABASE: $DATABASE"
+#echo "DATABASE: $DATABASE"
 echo "PORT: $PORT"
 
 # MySQL query
