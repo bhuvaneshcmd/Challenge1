@@ -21,7 +21,7 @@ DATABASE="employees"  # Assuming you want to query the 'employees' database
 #echo "HOST: $HOST"
 #echo "USER: $USER"
 #echo "DATABASE: $DATABASE"
-echo "PORT: $PORT"
+#echo "PORT: $PORT"
 
 # MySQL query
 QUERY="SELECT * FROM employees LIMIT 5;"
