@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # AWS Secrets Manager secret ID
-SECRET_ID="arn:aws:secretsmanager:us-east-1:488560023623:secret:MySQL-credentials_v7"
+SECRET_ID="arn:aws:secretsmanager:us-east-1:488560023623:secret:prod/mysql/admin-credentials_v12-rjE9Eq"
 
 # Retrieve the secret from AWS Secrets Manager
 SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --query SecretString --output text)
