@@ -23,7 +23,7 @@ jobs:
       - name: Retrieve DB secrets
         id: secrets
         run: |
-          SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id MySQL-credentials_v7 --query SecretString --output text)
+          SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id prod/mysql/admin-credentials_v12 --query SecretString --output text)
           echo "DB_HOST=$(echo $SECRET_JSON | jq -r .host)" >> $GITHUB_ENV
           echo "DB_USER=$(echo $SECRET_JSON | jq -r .username)" >> $GITHUB_ENV
           echo "DB_PASS=$(echo $SECRET_JSON | jq -r .password)" >> $GITHUB_ENV
